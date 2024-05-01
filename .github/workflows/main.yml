@@ -1,0 +1,37 @@
+name: "BUILD"
+on:
+  workflow_dispatch:
+    
+jobs:
+  build_on_macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "beta"
+
+      - name: Install Flutter Dependency
+        run: flutter pub get
+
+      - name: Flutter build ios
+        run: |
+          flutter build ios --release --no-codesign --verbose
+
+          chmod 777 unbitcode.sh
+          sh unbitcode.sh
+
+          mkdir -p Payload
+          mv ./build/ios/iphoneos/Runner.app Payload
+          zip -r -y Payload.zip Payload/Runner.app
+          mv Payload.zip AppRhyme.ipa
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppRhyme.ipa
+          path: AppRhyme.ipa
+          compression-level: 9
