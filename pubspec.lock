@@ -208,6 +208,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.9"
+  just_audio_windows:
+    dependency: "direct main"
+    description:
+      path: just_audio_windows
+      ref: HEAD
+      resolved-ref: ac9f785ce7233649494f0437f14d6419b9f1502f
+      url: "https://github.com/bdlukaa/just_audio_windows"
+    source: git
+    version: "0.2.1"
   leak_tracker:
     dependency: transitive
     description:
